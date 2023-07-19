@@ -70,3 +70,23 @@ $(document).ready(function () {
         $(".weather-icon")
           .addClass("wi")
           .addClass("wi-owm-" + iconCode);
+
+          // Get the 5-day forecast data for the city
+        $.getJSON(
+          "https://api.openweathermap.org/data/2.5/forecast?q=" +
+            city +
+            "&units=imperial&appid=6eef3ee62896cf65b9d37eec55ae4b69",
+          function (forecastData) {
+            // Group forecast data by date
+            var forecastByDate = {};
+
+            for (var i = 0; i < forecastData.list.length; i++) {
+              var forecast = forecastData.list[i];
+              var date = forecast.dt_txt.split(" ")[0];
+
+              if (!forecastByDate[date]) {
+                forecastByDate[date] = [];
+              }
+
+              forecastByDate[date].push(forecast);
+            }
