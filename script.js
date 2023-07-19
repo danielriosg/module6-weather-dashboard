@@ -90,3 +90,49 @@ $(document).ready(function () {
 
               forecastByDate[date].push(forecast);
             }
+// Display the 5-day forecast
+            var forecastInfo = "";
+
+            for (var date in forecastByDate) {
+              var forecasts = forecastByDate[date];
+
+              var temperatureSum = 0;
+              var humiditySum = 0;
+              var windSpeedSum = 0;
+              var description = "";
+
+              for (var j = 0; j < forecasts.length; j++) {
+                var forecast = forecasts[j];
+                temperatureSum += forecast.main.temp;
+                humiditySum += forecast.main.humidity;
+                windSpeedSum += forecast.wind.speed;
+                description = forecast.weather[0].description;
+              }
+
+              var averageTemperature = temperatureSum / forecasts.length;
+              var averageHumidity = humiditySum / forecasts.length;
+              var averageWindSpeed = windSpeedSum / forecasts.length;
+
+              forecastInfo +=
+                "<div class='forecast-block'>" +
+                "<h4>" +
+                date +
+                "</h4>" +
+                "<p>Temperature: " +
+                averageTemperature.toFixed(2) +
+                "°F</p>" +
+                "<p>Humidity: " +
+                averageHumidity.toFixed(2) +
+                "%</p>" +
+                "<p>Wind Speed: " +
+                averageWindSpeed.toFixed(2) +
+                " MPH</p>" +
+                "<p>Description: " +
+                description +
+                "</p>" +
+                "</div>";
+            }
+
+            $("#forecast-info").html(forecastInfo);
+          }
+        );
