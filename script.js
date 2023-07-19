@@ -27,7 +27,6 @@ $(document).ready(function () {
         // Capitalize the first letter of the city name
         var capitalizedCity = city.charAt(0).toUpperCase() + city.slice(1);
 
-
         // Get the current date
         var currentDate = new Date();
         var formattedDate = currentDate.toLocaleDateString(undefined, {
@@ -71,7 +70,7 @@ $(document).ready(function () {
           .addClass("wi")
           .addClass("wi-owm-" + iconCode);
 
-          // Get the 5-day forecast data for the city
+        // Get the 5-day forecast data for the city
         $.getJSON(
           "https://api.openweathermap.org/data/2.5/forecast?q=" +
             city +
@@ -90,7 +89,7 @@ $(document).ready(function () {
 
               forecastByDate[date].push(forecast);
             }
-// Display the 5-day forecast
+            // Display the 5-day forecast
             var forecastInfo = "";
 
             for (var date in forecastByDate) {
@@ -145,3 +144,23 @@ $(document).ready(function () {
       }
     );
   }
+  function displaySearchHistory() {
+    var searchHistoryList = $("#history-list");
+    searchHistoryList.empty();
+
+    // Retrieve search history from localStorage
+    var storedSearchHistory = localStorage.getItem("searchHistory");
+    if (storedSearchHistory) {
+      searchHistory = JSON.parse(storedSearchHistory);
+    }
+
+    // Display the search history
+    for (var i = 0; i < searchHistory.length; i++) {
+      var searchedCity = $("<li>")
+        .addClass("searched-city")
+        .text(searchHistory[i]);
+      searchHistoryList.prepend(searchedCity);
+    }
+  }
+});
+
