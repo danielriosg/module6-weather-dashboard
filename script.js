@@ -136,3 +136,12 @@ $(document).ready(function () {
             $("#forecast-info").html(forecastInfo);
           }
         );
+        // Store the searched city in the search history
+        if (!searchHistory.includes(capitalizedCity)) {
+          searchHistory.push(capitalizedCity);
+          localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+          displaySearchHistory();
+        }
+      }
+    );
+  }
